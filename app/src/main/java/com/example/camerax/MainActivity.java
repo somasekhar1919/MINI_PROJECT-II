@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()) {
                                         Log.e("firebase1", "Error getting data", task.getException());
-                                        //jhjhj
+                                        //jhjh
                                     }
                                     else {
 
