@@ -51,7 +51,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
     private androidx.camera.view.PreviewView PreviewView;
     private ListenableFuture<ProcessCameraProvider> CameraProviderFuture;
     private final ImageAnalysis.Analyzer qrimageanalysis = new QRimageanalysis();
-    ItemViewModel viewmodel;
+
 
 
 
