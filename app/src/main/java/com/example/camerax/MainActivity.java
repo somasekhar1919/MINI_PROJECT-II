@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CallBottomsheet(new BottomSheet());
 
+
             }
         });
 
@@ -85,34 +86,68 @@ public class MainActivity extends AppCompatActivity {
                 student.child("outing_records").orderByKey().limitToLast(1).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        String check = task.getResult().getValue().toString();
-                        Log.d(TAG, "checkforpending: ");
+
+                        String check = task.getResult().getValue()!=null?String.valueOf(task.getResult().getValue()):"{0=current_status=Inside}";
+
+                        if(check.equals("[null, current_status=OutSide]")){
+                            check ="{1=current_status=OutSide}";
+                        }
+                        Log.d(TAG, "checkforpending:"+ check);
+                        Log.d(TAG, "checkforpending:"+ task.getResult().getValue());
+
                         if(check.substring(check.length()-8,check.length()-1).equals("OutSide")){
 
+                            String finalCheck = check;
                             outing_records.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()) {
                                         Log.e("firebase1", "Error getting data", task.getException());
-                                        //jhjh
+
                                     }
                                     else {
 
-                                        String count= String.valueOf(check.substring(1));
+                                        String count= finalCheck.substring(1, finalCheck.length() - 24);
                                         Context context = getApplicationContext();
                                         DatabaseReference OUT_record_ID = student.child("outing_records").child(count);
                                         String DateNow = new Date().toString();
-                                        OUT_record_ID.setValue("current_status:OutSide");
-
-
+                                        OUT_record_ID.setValue("current_status=Inside");
+//
+//
                                         Toast.makeText(context, "sucess sent to DB",Toast.LENGTH_SHORT).show();
-                                        outing_records.child(count).child("OUT").setValue(DateNow);
+                                        outing_records.child(count).child("ID").setValue(count);
+                                        outing_records.child(count).child("IN").setValue(DateNow);
                                         finish();
                                     }
                                 }
                             });
 
 
+                        }else{
+                            outing_records.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e("firebase1", "Error getting data", task.getException());
+                                    }
+                                    else {
+
+                                        String count = String.valueOf(task.getResult().getChildrenCount()+1);
+                                        Context context = getApplicationContext();
+                                        DatabaseReference OUT_record_ID = student.child("outing_records").child(count);
+                                        String DateNow = new Date().toString();
+                                        OUT_record_ID.setValue("current_status=OutSide");
+
+
+                                        Toast.makeText(context, "sucess sent to DB",Toast.LENGTH_SHORT).show();
+                                        outing_records.child(count).child("ID").setValue(count);
+
+                                        outing_records.child(count).child("OUT").setValue(DateNow);
+                                        finish();
+                                    }
+                                }
+                            });
+
                         }
 
                     }
@@ -121,27 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                outing_records.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase1", "Error getting data", task.getException());
-                        }
-                        else {
 
-                            String count = String.valueOf(task.getResult().getChildrenCount()+1);
-                            Context context = getApplicationContext();
-                            DatabaseReference OUT_record_ID = student.child("outing_records").child(count);
-                            String DateNow = new Date().toString();
-                            OUT_record_ID.setValue("current_status:OutSide");
-
-
-                            Toast.makeText(context, "sucess sent to DB",Toast.LENGTH_SHORT).show();
-                            outing_records.child(count).child("OUT").setValue(DateNow);
-                            finish();
-                        }
-                    }
-                });
 
 
 

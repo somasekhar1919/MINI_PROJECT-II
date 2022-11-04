@@ -16,6 +16,7 @@ import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,9 +30,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -153,6 +158,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
 
         }
 
+        @SuppressLint("SetTextI18n")
         private void readerbarcode(List<Barcode> barcodes) {
             String testtext = "koooo";
 
@@ -191,14 +197,34 @@ public class BottomSheet extends BottomSheetDialogFragment {
                     Degree.setText(rawValue[1]);
 
                     LinearLayout Action = getActivity().findViewById(R.id.action);
+                    Button outing_button = getActivity().findViewById(R.id.outing_button);
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://camerax-d6467-default-rtdb.firebaseio.com/");
+                    DatabaseReference myRootRef = database.getReference();
+
+                    DatabaseReference students = myRootRef.child("Students");
+                    DatabaseReference student = students.child(RollNumber.getText().toString());
+                    student.child("outing_records").orderByKey().limitToLast(1).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            String check = task.getResult().getValue() != null ? String.valueOf(task.getResult().getValue()) : "{0=current_status=Inside}";
+
+                            if (check.substring(check.length() - 8, check.length() - 1).equals("OutSide")) {
+                                outing_button.setText("Update Entry");
+                            }
+                        }
+                    });
+
+
                     Action.setVisibility(View.VISIBLE);
                     getActivity().getSupportFragmentManager().beginTransaction().remove(BottomSheet.this).commit();
-                    break;
 
-    }catch (Exception e){
+                    break;
+                }
+                catch (Exception e){
                     e.printStackTrace();
                 }
-}
+            }
         }
     }
 
