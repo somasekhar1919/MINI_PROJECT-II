@@ -1,4 +1,4 @@
-package com.example.camerax;
+package com.example.guardapp;
 
 import org.junit.Test;
 

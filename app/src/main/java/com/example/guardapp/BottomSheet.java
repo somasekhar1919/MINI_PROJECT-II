@@ -1,4 +1,4 @@
-package com.example.camerax;
+package com.example.guardapp;
 
 import static android.content.ContentValues.TAG;
 
@@ -179,22 +179,28 @@ public class BottomSheet extends BottomSheetDialogFragment {
 //                    viewmodel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 //                    viewmodel.setData(testtext);
 
-                    Log.d(TAG, "901: " + rawValue[0]);
+                    Log.d(TAG, "901: " + rawValue[7]);
 
                     ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
                     toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                    TextView Name = getActivity().findViewById(R.id.Name);
+                    TextView Name       = getActivity().findViewById(R.id.Name);
                     TextView RollNumber = getActivity().findViewById(R.id.RollNumber);
-                    TextView Branch = getActivity().findViewById(R.id.Branch);
-                    TextView Degree = getActivity().findViewById(R.id.Degree);
+                    TextView Branch     = getActivity().findViewById(R.id.Branch);
+                    TextView Degree     = getActivity().findViewById(R.id.Degree);
+                    TextView Mobile     = getActivity().findViewById(R.id.Mobile);
+
+                    Button food = getActivity().findViewById(R.id.food_button);
+
                     Name.setVisibility(View.VISIBLE);
                     RollNumber.setVisibility(View.VISIBLE);
                     Branch.setVisibility(View.VISIBLE);
                     Degree.setVisibility(View.VISIBLE);
+                    Mobile.setVisibility(View.VISIBLE);
                     Name.setText(rawValue[0]);
                     RollNumber.setText(rawValue[3]);
                     Branch.setText(rawValue[2]);
                     Degree.setText(rawValue[1]);
+                    Mobile.setText(rawValue[7]);
 
                     LinearLayout Action = getActivity().findViewById(R.id.action);
                     Button outing_button = getActivity().findViewById(R.id.outing_button);
@@ -211,6 +217,8 @@ public class BottomSheet extends BottomSheetDialogFragment {
 
                             if (check.substring(check.length() - 8, check.length() - 1).equals("OutSide")) {
                                 outing_button.setText("Update Entry");
+                                food.setVisibility(View.GONE);
+
                             }
                         }
                     });

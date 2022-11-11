@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.camerax"
+        applicationId 'com.example.guardapp'
         minSdk 23
         targetSdk 32
         versionCode 1

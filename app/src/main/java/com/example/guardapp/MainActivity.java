@@ -1,4 +1,4 @@
-package com.example.camerax;
+package com.example.guardapp;
 
 
 import static android.content.ContentValues.TAG;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> CameraProviderFuture;
     private PreviewView PreviewView;
     private ExecutorService CameraService;
-    TextView Name, RollNumber, Branch, Degree;
+    TextView Name, RollNumber, Branch, Degree,Mobile;
 
 
     private Button scan_button,outing_button,food_button;
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         outing_button = findViewById(R.id.outing_button);
         food_button = findViewById(R.id.food_button);
         RollNumber = findViewById(R.id.RollNumber);
+        Name = findViewById(R.id.Name);
+        Mobile = findViewById(R.id.Mobile);
 
 
 
@@ -139,10 +141,15 @@ public class MainActivity extends AppCompatActivity {
                                         OUT_record_ID.setValue("current_status=OutSide");
 
 
-                                        Toast.makeText(context, "sucess sent to DB",Toast.LENGTH_SHORT).show();
                                         outing_records.child(count).child("ID").setValue(count);
-
                                         outing_records.child(count).child("OUT").setValue(DateNow);
+                                        outing_records.child(count).child("rollnumber").setValue(RollNumber.getText().toString());
+                                        outing_records.child(count).child("name").setValue(Name.getText().toString());
+                                        outing_records.child(count).child("rollnumber").setValue(RollNumber.getText().toString());
+                                        outing_records.child(count).child("mobile").setValue(Mobile.getText().toString());
+
+                                        Toast.makeText(context, "sucess sent to DB",Toast.LENGTH_SHORT).show();
+
                                         finish();
                                     }
                                 }
@@ -152,22 +159,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
         });
         food_button.setOnClickListener(new View.OnClickListener() {

@@ -107,6 +107,17 @@
                 android:textAlignment="center"
 
                 />
+            <TextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Mobile"
+                android:text="Mobile"
+                android:textSize="15sp"
+                android:padding="2dp"
+                android:textAlignment="center"
+
+                />
         </LinearLayout>
 
 
