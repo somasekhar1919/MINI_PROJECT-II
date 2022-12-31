@@ -58,10 +58,6 @@ public class BottomSheet extends BottomSheetDialogFragment {
     private final ImageAnalysis.Analyzer qrimageanalysis = new QRimageanalysis();
 
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

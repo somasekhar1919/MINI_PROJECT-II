@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button scan_button,outing_button,food_button;
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance("https://camerax-d6467-default-rtdb.firebaseio.com/");
 
     private DatabaseReference myRootRef = database.getReference();
@@ -164,9 +165,21 @@ public class MainActivity extends AppCompatActivity {
         food_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CallFoodFragment(new FoodFragement());
 
             }
         });
+
+    }
+
+    private void CallFoodFragment(FoodFragement foodFragement) {
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view,FoodFragement.class, null)
+//                .addToBackStack(null)
+                .commit();
+        food_button.setVisibility(View.GONE);
+        outing_button.setVisibility(View.GONE);
 
     }
 
